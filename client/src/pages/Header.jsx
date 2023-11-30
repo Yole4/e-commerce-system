@@ -3,14 +3,11 @@ import axios from 'axios';
 
 // images
 import givenImage from '../assets/images/given image.png';
-import logo from '../assets/images/logo.png';
 
 // react icons  
 import { AiTwotoneHome, AiOutlineCloseCircle } from "react-icons/ai";
-import { LiaAddressCardSolid } from "react-icons/lia";
 import { VscDeviceCamera } from "react-icons/vsc";
-import { MdLocalShipping } from "react-icons/md";
-import { MdOutlineShoppingCart, MdNotificationsActive } from "react-icons/md";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
@@ -111,7 +108,7 @@ function Header() {
                         textDecoration: location.pathname === "/about" ? 'underline' : '',
                         color: location.pathname === "/about" && 'orange'
                     }}>
-                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/about')} className="nav-link">About</span>
+                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/about')} className="nav-link">About Me</span>
                     </li>
                 </ul>
 

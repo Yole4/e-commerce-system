@@ -297,16 +297,16 @@ const changeProfileInfo = async (req, res) => {
     const sanitizeLastName = sanitizeAndValidate(names.lastName, validationRules);
     const sanitizeUserId = sanitizeAndValidate(userId.toString(), validationRules);
 
-    if (!sanitizeFirstName || !sanitizeLastName || !sanitizeUserId){
-        res.status(401).json({message: "Invalid Input!"});
-    }else{
+    if (!sanitizeFirstName || !sanitizeLastName || !sanitizeUserId) {
+        res.status(401).json({ message: "Invalid Input!" });
+    } else {
         // update info
         const updateInfo = `UPDATE users SET first_name = ?, middle_name = ?, last_name = ? WHERE id = ?`;
         db.query(updateInfo, [sanitizeFirstName, names.middleName, sanitizeLastName, sanitizeUserId], (error, results) => {
-            if (error){
-                res.status(401).json({message: "Server side error!"});
-            }else{
-                res.status(200).json({message: "Profile has been successfully updated!"});
+            if (error) {
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                res.status(200).json({ message: "Profile has been successfully updated!" });
             }
         });
     }
@@ -558,7 +558,7 @@ const updateFeedback = async (req, res) => {
             if (error) {
                 res.status(401).json({ message: "Server side error!" });
             } else {
-                res.status(200).json({message: "Updated!"});
+                res.status(200).json({ message: "Updated!" });
             }
         })
     } else {
@@ -614,73 +614,103 @@ const insertRatings = async (req, res) => {
 
 // get each comments
 const eachComments = async (req, res) => {
-    const {userId, productId} = req.body;
+    const { userId, productId } = req.body;
 
-    if (userId && productId){
+    if (userId && productId) {
         const fetchComment = `SELECT * FROM feedback WHERE user_id = ? AND product_id = ?`;
         db.query(fetchComment, [userId, productId], (error, results) => {
-            if (error){
-                res.status(401).json({message: "Server side error!"});
-            }else{
-                res.status(200).json({message: results});
+            if (error) {
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                res.status(200).json({ message: results });
             }
         });
-    }else{
-        res.status(401).json({message: "Something went wrong!"});
+    } else {
+        res.status(401).json({ message: "Something went wrong!" });
     }
 };
 
 // update about me
 const aboutMe = async (req, res) => {
-    const {about, userId} = req.body;
+    const { about, userId } = req.body;
 
     if (about, userId) {
         const updateAbout = `UPDATE users SET about_me = ? WHERE id = ?`;
         db.query(updateAbout, [about, userId], (error, results) => {
             if (error) {
-                res.status(401).json({message: "Server side error!"});
-            }else{
-                res.status(200).json({message: "Successfully Updated!"});
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                res.status(200).json({ message: "Successfully Updated!" });
             }
         })
-    }else{
-        res.status(401).json({message: "Something went wrong!"});
+    } else {
+        res.status(401).json({ message: "Something went wrong!" });
     }
 }
 
 // update phone number
 const phoneNumber = async (req, res) => {
-    const {phoneNumber, userId} = req.body;
+    const { phoneNumber, userId } = req.body;
 
     if (phoneNumber, userId) {
         const updatePhoneNumber = `UPDATE users SET phone_number = ? WHERE id = ?`;
         db.query(updatePhoneNumber, [phoneNumber, userId], (error, results) => {
             if (error) {
-                res.status(401).json({message: "Server side error!"});
-            }else{
-                res.status(200).json({message: "Successfully Updated!"});
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                res.status(200).json({ message: "Successfully Updated!" });
             }
         })
-    }else{
-        res.status(401).json({message: "Something went wrong!"});
+    } else {
+        res.status(401).json({ message: "Something went wrong!" });
     }
 }
 
 // update phone number
 const updateEmail = async (req, res) => {
-    const {email, userId} = req.body;
+    const { email, userId } = req.body;
 
     if (email, userId) {
         const updateEmail = `UPDATE users SET email = ? WHERE id = ?`;
         db.query(updateEmail, [email, userId], (error, results) => {
             if (error) {
-                res.status(401).json({message: "Server side error!"});
-            }else{
-                res.status(200).json({message: "Successfully Updated!"});
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                res.status(200).json({ message: "Successfully Updated!" });
             }
         })
-    }else{
-        res.status(401).json({message: "Something went wrong!"});
+    } else {
+        res.status(401).json({ message: "Something went wrong!" });
+    }
+}
+
+// users likes product
+const likeProduct = async (req, res) => {
+    const { userId, productId } = req.body;
+
+    if (userId) {
+        const selectProductIdAndUserId = `SELECT * FROM like_product WHERE product_id = ? AND user_id = ?`;
+        db.query(selectProductIdAndUserId, [productId, userId], (error, results) => {
+            if (error) {
+                res.status(401).json({ message: "Server side error!" });
+            } else {
+                if (results.length > 0) {
+                    // update
+                } else {
+                    // add
+                }
+            }
+        });
+        // const like = `INSERT INTO like_product (user_id, product_id, status) VALUES (?, ?, ?)`;
+        // db.query(like, [userId, productId], (error, results) => {
+        //     if (error){
+        //         res.status(401).json({message: "Server side error!"});
+        //     }else{
+        //         res.status(200).json({message: "Liked"});
+        //     }
+        // })
+    } else {
+        res.status(401).json({ message: "Something went wrong!" });
     }
 }
 

@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import { agetRequest, apostRequest, baseUrl, getRequest, postRequest } from "../utils/Services";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "./AdminContext";
+import { PublicContext } from "./PublicContext";
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     // const {changeStatusMount} = useContext(AdminContext);
+    // const {productList} = useContext(PublicContext);
 
     const navigate = useNavigate();
 
@@ -831,6 +833,26 @@ export const AuthContextProvider = ({ children }) => {
         }
     }, [userId, eachMount, feedbackMount]);
 
+    // ===================================  LIKE THE PRODUCT    ----------------------------------------------
+    const [likeProductMount, setLikeProductMount] = useState(false);
+    const i_like = async (item) => {
+        setIsLoading(true);
+
+        try {
+            const response = await apostRequest(`${baseUrl}/users/like`, {userId: userId.id, productId: item});
+
+            setIsLoading(false);
+
+            if (response.error) {
+                setErrorResponse({ message: response.message, isError: true });
+            }else{
+                setLikeProductMount(likeProductMount ? false :true);
+            }
+        } catch (error) {
+            setIsLoading(false);
+        }
+    }
+
 
     return <AuthContext.Provider value={{
         user,
@@ -912,7 +934,9 @@ export const AuthContextProvider = ({ children }) => {
         handlePhoneNumber,
         isEmail, setIsEmail,
         email, setEmail,
-        handleEmail
+        handleEmail,
+        i_like
+        // liked
     }}>
         {children}
     </AuthContext.Provider>

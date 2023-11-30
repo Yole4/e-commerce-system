@@ -4,7 +4,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { CiEdit } from "react-icons/ci";
 
 function About() {
-    const { userCredentials, handleUpdateAbout, isAboutMe, setIsAboutMe, about, setAbout, isLoading, errorResponse, phoneNumber, setPhoneNumber, isPhoneNumber, setIsPhoneNumber, handlePhoneNumber, email, setEmail, isEmail, setIsEmail, handleEmail } = useContext(AuthContext);
+    const { userCredentials, handleUpdateAbout, isAboutMe, setIsAboutMe, about, setAbout, errorResponse, phoneNumber, setPhoneNumber, isPhoneNumber, setIsPhoneNumber, handlePhoneNumber, email, setEmail, isEmail, setIsEmail, handleEmail } = useContext(AuthContext);
 
     const [isErrorResponse, setIsErrorResponse] = useState(false);
 

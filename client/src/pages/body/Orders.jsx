@@ -1,20 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-// images
-import givenImage from '../../assets/images/given image.png';
-
 // react icons
 import { ImSearch } from "react-icons/im";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-
-import { useNavigate } from 'react-router-dom';
 
 // baseUrl
 import { backendUrl } from '../../utils/Services';
 
 // require header and sidebar
 import SideBar from '../SideBar';
-import Header from '../Header';
 import { AdminContext } from '../../context/AdminContext';
 import MyHeader from '../MyHeader';
 

@@ -4,28 +4,18 @@ import '../../assets/css/Home.css';
 
 // images
 import givenImage from '../../assets/images/given image.png';
-import logo from '../../assets/images/logo.png';
-import notificationIcon from '../../assets/images/shopping.svg';
 
 import { useNavigate } from 'react-router-dom';
 
 // react icons
-import { LuShoppingCart } from "react-icons/lu";
-import { BsPersonCircle, BsArrowUpSquare } from "react-icons/bs";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { AiOutlineCloseCircle, AiOutlineMinus, AiOutlinePlus, AiFillLike, AiFillShop } from "react-icons/ai";
 import { VscDeviceCamera } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaAddressCard } from "react-icons/fa";
-import { GrProductHunt } from "react-icons/gr";
-import { FcShipped } from "react-icons/fc";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { FiShoppingCart } from "react-icons/fi";
 
 import { AuthContext } from '../../context/AuthContext';
 import { PublicContext } from '../../context/PublicContext';
 import { backendUrl } from '../../utils/Services';
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { AdminContext } from '../../context/AdminContext';
 import Header from '../Header';
 
@@ -40,15 +30,12 @@ function Home() {
 
 
   // ------------------------------------  LOGIN SIDE---------------------------------------
-  const { isLoading, errorResponse, user, logoutUser, updateLoginInfo, loginInfo,
-    userCredentials, handleLogin, isOpenLogin, setIsOpenLogin, isLogout, setIsLogout,
-    registerInfo, updateRegisterInfo, registerUser, isOpenRegister, setIsOpenRegister,
+  const { isLoading, errorResponse, user, logoutUser,
+    userCredentials, isLogout, setIsLogout,
     updateProfile, handleAddToCart, isProductClick, setIsProductClick, cartList,
-    isChangePassword, setIsChangePassword, changePasswordData, setChangePasswordData, handleChangePassword,
-    isAddAddress, setIsAddAddress, addressData, setAddressData, handleAddAddress, isMyAddress, setIsMyAddress, myAddressList, placeOrderData, setPlaceOrderData,
-    isPlaceOrder, setIsPlaceOrder, handlePlaceOrder, isCart, setIsCart, handleDeleteCart, isMyOrder, setIsMyOrder, myOrdersList, myNotifications,
-    feedbackData, setFeedbackData, handleAddFeedback, handleButtonFeedback, isRateMe, setIsRateMe, isSelectProduct, setIsSelectProduct, commentsList,
-    isEditProfileName, setIsEditProfileName, names, setNames, handleEditProfileName, eachComments, checkUpdate, setCheckUpdate
+    isChangePassword, setIsChangePassword, changePasswordData, setChangePasswordData, handleChangePassword, myAddressList, placeOrderData, setPlaceOrderData,
+    isPlaceOrder, setIsPlaceOrder, handlePlaceOrder, isCart, setIsCart, handleDeleteCart, setFeedbackData, setIsSelectProduct, commentsList,
+    isEditProfileName, setIsEditProfileName, names, setNames, handleEditProfileName, i_like
   } = useContext(AuthContext); // require auth context
 
   const { categoryList, publicLoading, productListToSearch, homeSearch, setHomeSearch } = useContext(PublicContext);
@@ -346,21 +333,21 @@ function Home() {
               <input type="checkbox" onChange={handleToggleAllCheckboxes} style={{ height: '20px', width: '20px', cursor: 'pointer' }} />
               <AiFillShop size={20} />
               <span>{`${userCredentials?.first_name}'s`} Cart</span>
-              <div style={{ position: 'absolute', right: '20px', color: 'red' }}>
+              <div style={{ position: 'absolute', right: '20px', color: 'darkred' }}>
                 <span>Total: ₱{placeOrderData.totalAmount}</span>
               </div>
             </div>
 
             {cartList?.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '15px' }}>
-                <span style={{ color: 'red' }}>Cart is Empty</span>
+                <span style={{ color: 'darkred' }}>Cart is Empty</span>
               </div>
             ) : (
               cartList?.map((item) => (
                 <div key={item.id}>
                   <hr />
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', marginLeft: '10px' }}>
-                    <span style={{ color: 'red', fontSize: '15px' }}>
+                    <span style={{ color: 'darkred', fontSize: '15px' }}>
                       <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>{' '}
                       <span style={{ color: '' }}>₱{item.prize}</span>
                     </span>
@@ -430,7 +417,7 @@ function Home() {
                     </div>
 
                     <span>
-                      <RiDeleteBin6Line onClick={() => handleDeleteCart(item)} size={20} style={{ color: 'red', cursor: 'pointer' }} />
+                      <RiDeleteBin6Line onClick={() => handleDeleteCart(item)} size={20} style={{ color: 'darkred', cursor: 'pointer' }} />
                     </span>
                   </div>
                 </div>
@@ -533,7 +520,7 @@ function Home() {
                             <span>{item.comments}</span>
                           </div>
                           <div style={{ display: 'flex', fontSize: '15px', gap: '5px', marginTop: '8px' }}>
-                            <AiFillLike style={{ cursor: 'pointer' }} size={20} />
+                            <AiFillLike style={{ cursor: 'pointer' }} size={20} onClick={() => i_like(item.id)} />
                             <span> {item.is_like}</span>
                           </div>
                         </div>

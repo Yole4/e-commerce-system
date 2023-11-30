@@ -6,7 +6,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function UserOrders() {
 
-    const { myOrdersList, isMyOrder, setFeedbackData, setIsMyOrder, setIsRateMe, checkUpdate, isRateMe, eachComments, handleButtonFeedback, setCheckUpdate, feedbackData, handleAddFeedback, isSelectProduct, setIsSelectProduct } = useContext(AuthContext);
+    const { myOrdersList, setFeedbackData, setIsRateMe, checkUpdate, isRateMe, eachComments, handleButtonFeedback, setCheckUpdate, feedbackData, handleAddFeedback, isSelectProduct, setIsSelectProduct } = useContext(AuthContext);
 
     // ------------------ button feedback -------------------
     const buttonFeedback = async (item) => {

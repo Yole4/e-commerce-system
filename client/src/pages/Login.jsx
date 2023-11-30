@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
+import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { AdminContext } from '../context/AdminContext';
 import { backendUrl } from '../utils/Services';
@@ -15,7 +13,7 @@ function Login() {
     const [fafaEyess, setFafaEyess] = useState(false);
     const [login, setLogin] = useState(true);
 
-    const { setLoginInfo, errorResponse, loginInfo, handleLogin, isLoading, registerInfo, setRegisterInfo, registerUser } = useContext(AuthContext);
+    const { setLoginInfo, errorResponse, loginInfo, handleLogin, registerInfo, setRegisterInfo, registerUser } = useContext(AuthContext);
 
     const { settingsData } = useContext(AdminContext);
 
