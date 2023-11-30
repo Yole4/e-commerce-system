@@ -23,7 +23,9 @@ export const AuthContextProvider = ({ children }) => {
         lastName: '',
         username: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        email: '',
+        phoneNumber: null
     });
 
     useEffect(() => {
@@ -40,15 +42,7 @@ export const AuthContextProvider = ({ children }) => {
         setIsLoading(true);
         setErrorResponse(null);
 
-        const firstName = registerInfo.firstName;
-        const middleName = registerInfo.middleName;
-        const lastName = registerInfo.lastName;
-        const username = registerInfo.username;
-        const password = registerInfo.password;
-        const confirmPassword = registerInfo.confirmPassword;
-        const data = { firstName, middleName, lastName, username, password, confirmPassword };
-
-        const response = await postRequest(`${baseUrl}/users/register`, data);
+        const response = await postRequest(`${baseUrl}/users/register`, {registerInfo});
 
         setIsLoading(false);
         setIsOpenRegister(false);
@@ -189,6 +183,90 @@ export const AuthContextProvider = ({ children }) => {
         }
     };
 
+    // ---------------------------------------------------- UPDATE ABOUT ME -------------------------------------------------------------
+    const [isAboutMe, setIsAboutMe] = useState(false);
+    const [about, setAbout] = useState('');
+
+    const handleUpdateAbout = async (e) => {
+        e.preventDefault();
+
+        setErrorResponse(null);
+        setIsLoading(true);
+        
+        try {
+            const response = await apostRequest(`${baseUrl}/users/update-about`, {about, userId: userId.id});
+
+            setIsLoading(false);
+
+            if (response.error) {
+                setErrorResponse({ message: response.message, isError: true });
+            }else{
+                setMount(mount ? false : true);
+                setIsAboutMe(false);
+                setErrorResponse({ message: response.message, isError: false });
+            }
+        } catch (error) {
+            setIsLoading(false);
+            console.log("Error ", error);
+        }
+    }
+
+    // ---------------------------------------------------- UPDATE Phone Number -------------------------------------------------------------
+    const [isPhoneNumber, setIsPhoneNumber] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    const handlePhoneNumber = async (e) => {
+        e.preventDefault();
+
+        setErrorResponse(null);
+        setIsLoading(true);
+        
+        try {
+            const response = await apostRequest(`${baseUrl}/users/update-number`, {phoneNumber, userId: userId.id});
+
+            setIsLoading(false);
+
+            if (response.error) {
+                setErrorResponse({ message: response.message, isError: true });
+            }else{
+                setMount(mount ? false : true);
+                setIsPhoneNumber(false);
+                setErrorResponse({ message: response.message, isError: false });
+            }
+        } catch (error) {
+            setIsLoading(false);
+            console.log("Error ", error);
+        }
+    }
+
+    // ---------------------------------------------------- UPDATE Email -------------------------------------------------------------
+    const [isEmail, setIsEmail] = useState(false);
+    const [email, setEmail] = useState('');
+
+    const handleEmail = async (e) => {
+        e.preventDefault();
+
+        setErrorResponse(null);
+        setIsLoading(true);
+        
+        try {
+            const response = await apostRequest(`${baseUrl}/users/update-email`, {email, userId: userId.id});
+
+            setIsLoading(false);
+
+            if (response.error) {
+                setErrorResponse({ message: response.message, isError: true });
+            }else{
+                setMount(mount ? false : true);
+                setIsEmail(false);
+                setErrorResponse({ message: response.message, isError: false });
+            }
+        } catch (error) {
+            setIsLoading(false);
+            console.log("Error ", error);
+        }
+    }
+
     //------------------------------------------------------    EDIT PROFILE    -----------------------------------------------------------
     const [isEditProfileName, setIsEditProfileName] = useState(false);
     const [names, setNames] = useState({
@@ -239,6 +317,9 @@ export const AuthContextProvider = ({ children }) => {
                         console.log(response.message);
                     } else {
                         setChangePasswordData((prev) => ({ ...prev, username: response.message[0].username }));
+                        setAbout(response.message[0].about_me);
+                        setPhoneNumber(response.message[0].phone_number);
+                        setEmail(response.message[0].email);
                         setUserCredentials(response.message[0]);
                     }
                 } catch (error) {
@@ -418,7 +499,7 @@ export const AuthContextProvider = ({ children }) => {
         setErrorResponse(null);
 
         try {
-            const response = await apostRequest(`${baseUrl}/users/place-order`, { placeOrderData, userId: userId.id, fullname: `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}` });
+            const response = await apostRequest(`${baseUrl}/users/place-order`, { placeOrderData, userId: userId.id, fullname: `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`, phoneNumber: userCredentials.phone_number, email: userCredentials.email });
 
             setIsLoading(false);
 
@@ -818,7 +899,20 @@ export const AuthContextProvider = ({ children }) => {
         eachComments,
         checkUpdate,
         setCheckUpdate,
-        handleDelete
+        handleDelete,
+        isAboutMe,
+        setIsAboutMe,
+        about,
+        setAbout,
+        handleUpdateAbout,
+        isPhoneNumber,
+        setIsPhoneNumber,
+        phoneNumber,
+        setPhoneNumber,
+        handlePhoneNumber,
+        isEmail, setIsEmail,
+        email, setEmail,
+        handleEmail
     }}>
         {children}
     </AuthContext.Provider>

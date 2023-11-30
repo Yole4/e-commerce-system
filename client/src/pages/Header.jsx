@@ -106,6 +106,13 @@ function Header() {
                             </li>
                         </>
                     )}
+
+                    <li className="nav-item d-sm-inline-block" style={{
+                        textDecoration: location.pathname === "/about" ? 'underline' : '',
+                        color: location.pathname === "/about" && 'orange'
+                    }}>
+                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/about')} className="nav-link">About</span>
+                    </li>
                 </ul>
 
                 <ul className="navbar-nav ml-auto">

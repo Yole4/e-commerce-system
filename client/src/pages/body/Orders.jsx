@@ -86,6 +86,8 @@ function Orders() {
                                                     <th>User Name</th>
                                                     <th>Order Date</th>
                                                     <th>Address</th>
+                                                    <th>Contact Number</th>
+                                                    <th>Contact Email</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -97,6 +99,8 @@ function Orders() {
                                                         <td>{item.fullname}</td>
                                                         <td><p className="m-0 truncate-1">{item.date}</p></td>
                                                         <td><p className="m-0 truncate-1">{item.address}</p></td>
+                                                        <td><p className="m-0 truncate-1">{item.phone_number}</p></td>
+                                                        <td><p className="m-0 truncate-1">{item.email}</p></td>
                                                         <td >
                                                             <span className="badge badge-success badge-pill" style={{ background: item.status === 'Pending' ? 'red' : item.status === 'To Ship' ? 'lightblue' : item.status === "To Receive" ? 'orange' : 'blue' }}>{item.status}</span></td>
                                                         <td style={{ textAlign: 'center' }}>

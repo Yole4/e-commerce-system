@@ -16,6 +16,7 @@ import MyHome from './pages/body/MyHome';
 import Address from './pages/body/Address';
 import Login from './pages/Login';
 import UserOrders from './pages/body/UserOrders';
+import About from './pages/body/About';
 
 function App() {
   const {user} = useContext(AuthContext);
@@ -30,6 +31,7 @@ function App() {
       <Route path="/products" element={user? <Products /> : <Navigate to="/" replace /> } />
       <Route path="/orders" element={user? <Orders /> : <MyHome /> } />
       <Route path="/address" element={user? <Address /> : <MyHome /> } />
+      <Route path="/about" element={user? <About /> : <MyHome /> } />
       <Route path="/login" element={user? <MyHome /> : <Login /> } />
       <Route path="/user-orders" element={user? <UserOrders /> : <MyHome /> } />
       <Route path="/" element={<MyHome /> } />

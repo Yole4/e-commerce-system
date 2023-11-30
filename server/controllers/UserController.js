@@ -24,31 +24,31 @@ const protected = async (req, res) => {
 
 // register user
 const registerUser = async (req, res) => {
-    const { firstName, middleName, lastName, username, password, confirmPassword } = req.body;
+    const { registerInfo, firstName } = req.body;
 
-    if (firstName, lastName, username, password, confirmPassword) {
+    if (registerInfo.firstName, registerInfo.lastName, registerInfo.username, registerInfo.password, registerInfo.confirmPassword, registerInfo.email, registerInfo.phoneNumber) {
         try {
             const findUsername = `SELECT * FROM users WHERE username = ?`;
-            db.query(findUsername, [username], (error, results) => {
+            db.query(findUsername, [registerInfo.username], (error, results) => {
                 if (error) {
                     res.status(401).json({ message: "Server side error!" });
                 } else {
                     if (results.length > 0) {
                         res.status(401).json({ message: "Username already exist!" });
                     } else {
-                        if (!firstName || !lastName || !password || !confirmPassword) {
+                        if (!registerInfo.firstName || !registerInfo.lastName || !registerInfo.password || !registerInfo.confirmPassword) {
                             res.status(401).json({ message: "All fields is required!" });
                         } else {
                             // if (!validator.isEmail(email)) {
                             //     res.status(401).json({message: "Invalid Email!"});
                             // }else{
                             // check pass and conpass
-                            if (password === confirmPassword) {
-                                if (password.length > 7) {
+                            if (registerInfo.password === registerInfo.confirmPassword) {
+                                if (registerInfo.password.length > 7) {
                                     // register user
-                                    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-                                    const registerUser = `INSERT INTO users (first_name, middle_name, last_name, username, password, user_type) VALUES (?, ?, ?, ?, ?, ?)`;
-                                    db.query(registerUser, [firstName, middleName, lastName, username, hashedPassword, "Customer"], (error, results) => {
+                                    const hashedPassword = crypto.createHash('sha256').update(registerInfo.password).digest('hex');
+                                    const registerUser = `INSERT INTO users (first_name, middle_name, last_name, username, password, user_type, email, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+                                    db.query(registerUser, [registerInfo.firstName, registerInfo.middleName, registerInfo.lastName, registerInfo.username, hashedPassword, "Customer", registerInfo.email, registerInfo.phoneNumber], (error, results) => {
                                         if (error) {
                                             res.status(401).json({ message: "Server side error!" });
                                         } else {
@@ -56,8 +56,8 @@ const registerUser = async (req, res) => {
                                             // create token
                                             const userId = results.insertId;
 
-                                            const token = createToken(userId, username, "Customer");
-                                            res.status(200).json({ message: `${firstName} ${middleName} ${lastName} has been successfully registered!`, token: token, id: userId });
+                                            const token = createToken(userId, registerInfo.username, "Customer");
+                                            res.status(200).json({ message: `${registerInfo.firstName} ${registerInfo.middleName} ${registerInfo.lastName} has been successfully registered!`, token: token, id: userId });
                                         }
                                     });
                                 } else {
@@ -412,7 +412,7 @@ const fetchAddress = async (req, res) => {
 
 // place order
 const placeOrder = async (req, res) => {
-    const { placeOrderData, userId, fullname } = req.body;
+    const { placeOrderData, userId, fullname, phoneNumber, email } = req.body;
 
     if (placeOrder.address === "") {
         res.status(401).json({ message: "Please Select Address!" });
@@ -435,8 +435,8 @@ const placeOrder = async (req, res) => {
             const productInfo = (placeOrderData.productInfo).join(',');
 
             // insert to database
-            const insertProduct = `INSERT INTO orders (user_id, fullname, product_id, product_info, quantity, each_amount, address, payment_type, shipping, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-            db.query(insertProduct, [sanitizeUserId, sanitizeFullname, productId, productInfo, quantity, eachAmount, sanitizeAddress, sanitizePaymentType, 130, placeOrderData.totalAmount], (error, results) => {
+            const insertProduct = `INSERT INTO orders (user_id, fullname, product_id, product_info, quantity, each_amount, address, payment_type, shipping, total_amount, phone_number, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            db.query(insertProduct, [sanitizeUserId, sanitizeFullname, productId, productInfo, quantity, eachAmount, sanitizeAddress, sanitizePaymentType, 130, placeOrderData.totalAmount, phoneNumber, email], (error, results) => {
                 if (error) {
                     res.status(401).json({ message: "Server side error!" });
                 } else {
@@ -630,4 +630,58 @@ const eachComments = async (req, res) => {
     }
 };
 
-module.exports = { updateFeedback, eachComments, insertRatings, getComments, addFeedback, fetchUserNotification, fetchMyOrder, deleteCart, registerUser, loginUser, fetchCustomerUsers, fetchSellerUsers, protected, changePassword, changeProfileInfo, fetchUserCredentials, profileUpload, addCart, fetchCart, addAddress, fetchAddress, placeOrder };
+// update about me
+const aboutMe = async (req, res) => {
+    const {about, userId} = req.body;
+
+    if (about, userId) {
+        const updateAbout = `UPDATE users SET about_me = ? WHERE id = ?`;
+        db.query(updateAbout, [about, userId], (error, results) => {
+            if (error) {
+                res.status(401).json({message: "Server side error!"});
+            }else{
+                res.status(200).json({message: "Successfully Updated!"});
+            }
+        })
+    }else{
+        res.status(401).json({message: "Something went wrong!"});
+    }
+}
+
+// update phone number
+const phoneNumber = async (req, res) => {
+    const {phoneNumber, userId} = req.body;
+
+    if (phoneNumber, userId) {
+        const updatePhoneNumber = `UPDATE users SET phone_number = ? WHERE id = ?`;
+        db.query(updatePhoneNumber, [phoneNumber, userId], (error, results) => {
+            if (error) {
+                res.status(401).json({message: "Server side error!"});
+            }else{
+                res.status(200).json({message: "Successfully Updated!"});
+            }
+        })
+    }else{
+        res.status(401).json({message: "Something went wrong!"});
+    }
+}
+
+// update phone number
+const updateEmail = async (req, res) => {
+    const {email, userId} = req.body;
+
+    if (email, userId) {
+        const updateEmail = `UPDATE users SET email = ? WHERE id = ?`;
+        db.query(updateEmail, [email, userId], (error, results) => {
+            if (error) {
+                res.status(401).json({message: "Server side error!"});
+            }else{
+                res.status(200).json({message: "Successfully Updated!"});
+            }
+        })
+    }else{
+        res.status(401).json({message: "Something went wrong!"});
+    }
+}
+
+module.exports = { phoneNumber, updateEmail, aboutMe, updateFeedback, eachComments, insertRatings, getComments, addFeedback, fetchUserNotification, fetchMyOrder, deleteCart, registerUser, loginUser, fetchCustomerUsers, fetchSellerUsers, protected, changePassword, changeProfileInfo, fetchUserCredentials, profileUpload, addCart, fetchCart, addAddress, fetchAddress, placeOrder };

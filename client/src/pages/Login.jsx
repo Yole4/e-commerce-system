@@ -130,6 +130,24 @@ function Login() {
                                 </div>
 
                                 <div className="input-group mb-3">
+                                    <input type="text" style={{height: '40px', paddingLeft: '15px', fontSize: '14px'}} className="form-control" placeholder="Your@gmail.com" value={registerInfo.email} onChange={(e) => setRegisterInfo((prev) => ({ ...prev, email: e.target.value }))} required />
+                                    <div className="input-group-append" >
+                                        <div className="input-group-text">
+                                            <span className="fas fa-user" style={{fontSize: '14px'}} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <input type="number" style={{height: '40px', paddingLeft: '15px', fontSize: '14px'}} className="form-control" placeholder="+63" value={registerInfo.phoneNumber} onChange={(e) => setRegisterInfo((prev) => ({ ...prev, phoneNumber: e.target.value }))} required />
+                                    <div className="input-group-append" >
+                                        <div className="input-group-text">
+                                            <span className="fas fa-user" style={{fontSize: '14px'}} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="input-group mb-3">
                                     <input type="text" style={{height: '40px', paddingLeft: '15px', fontSize: '14px'}} className="form-control" placeholder="Username" value={registerInfo.username} onChange={(e) => setRegisterInfo((prev) => ({ ...prev, username: e.target.value }))} required />
                                     <div className="input-group-append" >
                                         <div className="input-group-text">
