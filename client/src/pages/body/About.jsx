@@ -20,7 +20,7 @@ function About() {
     return (
         <>
             <Header />
-            <div className="content-wrapper pt-5 about-container" style={{ color: 'black', marginLeft: '0', minHeight: 'calc(100vh - 57px)', background: 'rgb(120, 160, 174)' }}>
+            <div className="content-wrapper pt-5 about-container" style={{ color: 'black', marginLeft: '0', minHeight: 'calc(100vh - 57px)', background: 'pink' }}>
                 {/* Main content */}
                 <section className="content ">
                     <div className="container">
