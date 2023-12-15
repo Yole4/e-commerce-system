@@ -321,7 +321,7 @@ function Home() {
       {/* --------   CART ---------- */}
       {isCart && (
         <div className="popup" onClick={() => setIsCart(false)}>
-          <div className="popup-bodyss" onClick={(e) => e.stopPropagation()} style={{ background: 'rgb(120, 160, 174)', animation: isCart ? 'dropBottom .3s linear' : '' }}>
+          <div className="popup-bodyss" onClick={(e) => e.stopPropagation()} style={{ background: 'pink', animation: isCart ? 'dropBottom .3s linear' : '' }}>
             <div className="modal-close" onClick={() => setIsCart(false)}>
               <AiOutlineCloseCircle size={30} />
             </div>
@@ -434,7 +434,7 @@ function Home() {
       {/* --------   PRODUCT LIST ---------- */}
       {isProductClick && (
         <div className="popup" onClick={() => { setIsProductClick(false); setAmmount(0); setQuantity(0) }}>
-          <div className="popup-body" onClick={(e) => e.stopPropagation()} style={{ animation: isProductClick ? 'dropBottom .3s linear' : '', background: 'rgb(120, 160, 174)' }}>
+          <div className="popup-body" onClick={(e) => e.stopPropagation()} style={{ animation: isProductClick ? 'dropBottom .3s linear' : '', background: 'pink' }}>
             <div style={{ minHeight: '100vh', overflow: 'auto' }}>
               <div className="modal-close" onClick={() => setIsProductClick(false)} id='comments'>
                 <AiOutlineCloseCircle size={30} />

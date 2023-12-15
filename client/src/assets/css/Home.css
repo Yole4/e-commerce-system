@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     /* background-color: rgb(33, 46, 50); */
-    background-color: rgb(120, 160, 174);
+    background-color: pink;
 }
 
 .product-name {
@@ -615,7 +615,7 @@ header .shopping span{
     font-size: 1.7rem;
 }
 .btns:hover{
-    background: pink;
+    background: rgb(84, 63, 66);
 }
 
 .myHeader{
@@ -685,7 +685,7 @@ header .shopping span{
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url('../images/back.avif') no-repeat;
+    background: url('../images/myHone.avif') no-repeat;
     background-size: cover;
     background-position: center;
     padding: 0 5%;
