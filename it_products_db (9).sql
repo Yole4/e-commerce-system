@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 03:27 AM
+-- Generation Time: Dec 15, 2023 at 07:45 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -99,7 +99,8 @@ CREATE TABLE `my_cart` (
 --
 
 INSERT INTO `my_cart` (`id`, `user_id`, `product_id`, `quantity`, `date`, `isDelete`) VALUES
-(76, 13, 11, 1, '2023-11-30 01:26:27', 'not');
+(76, 13, 11, 1, '2023-11-30 01:26:27', 'not'),
+(77, 13, 12, 8, '2023-11-30 12:02:58', 'not');
 
 -- --------------------------------------------------------
 
@@ -125,7 +126,9 @@ CREATE TABLE `notifications` (
 INSERT INTO `notifications` (`id`, `user_id`, `notification_type`, `content`, `date`, `url`, `seen`, `isDelete`) VALUES
 (140, 1, 'Place Order', 'customer customer had new order!', '2023-11-30 01:34:35', '', 0, 'not'),
 (141, 13, 'Order Status', 'Your order status was updated to Received.', '2023-11-30 01:35:09', '', 0, 'not'),
-(142, 1, 'feedback', 'customer customer added feedback on Mr. Joker', '2023-11-30 01:35:26', '', 0, 'not');
+(142, 1, 'feedback', 'customer customer added feedback on Mr. Joker', '2023-11-30 01:35:26', '', 0, 'not'),
+(143, 1, 'Place Order', 'customer customer had new order!', '2023-11-30 12:03:34', '', 0, 'not'),
+(144, 13, 'Order Status', 'Your order status was updated to To Ship.', '2023-11-30 12:04:16', '', 0, 'not');
 
 -- --------------------------------------------------------
 
@@ -157,7 +160,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `fullname`, `product_id`, `product_info`, `quantity`, `each_amount`, `address`, `phone_number`, `email`, `payment_type`, `shipping`, `date`, `status`, `isDelete`, `total_amount`) VALUES
-(62, 13, 'customer customer', '11', 'Mr. Joker', '2', '40.00', 'sdf. sdf sdf, dsfsd', '09234321', 'customer@gmail.com', 'Cash on Delivery', 130, '2023-11-30 01:34:35', 'Received', 'not', 170);
+(62, 13, 'customer customer', '11', 'Mr. Joker', '2', '40.00', 'sdf. sdf sdf, dsfsd', '09234321', 'customer@gmail.com', 'Cash on Delivery', 130, '2023-11-30 01:34:35', 'Received', 'not', 170),
+(63, 13, 'customer customer', '12', 'sample product', '8', '80.00', 'sdf. sdf sdf, dsfsd', '09234321', 'customer@gmail.com', 'Cash on Delivery', 130, '2023-11-30 12:03:34', 'To Ship', 'not', 210);
 
 -- --------------------------------------------------------
 
@@ -186,7 +190,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category`, `image`, `name`, `description`, `address`, `stock`, `prize`, `discount`, `sold`, `ratings`, `date`, `isDelete`) VALUES
-(11, 'Laptops', 'assets/product image/1701307560657_+_joker smile.jpg', 'Mr. Joker', '', 'my address', 21, 20, 23, 2, 4, '2023-11-30 01:26:00', 'not');
+(11, 'Laptops', 'assets/product image/1701307560657_+_joker smile.jpg', 'Mr. Joker', '', 'my address', 21, 20, 23, 2, 4, '2023-11-30 01:26:00', 'not'),
+(12, 'Laptops', 'assets/product image/1701345716789_+_Person-With-Shopping-Cart.png', 'sample product', '', 'address sample', 15, 10, 20, 8, 0, '2023-11-30 12:01:56', 'not');
 
 -- --------------------------------------------------------
 
@@ -363,25 +368,25 @@ ALTER TABLE `like_product`
 -- AUTO_INCREMENT for table `my_cart`
 --
 ALTER TABLE `my_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `settings`
