@@ -14,9 +14,9 @@ function MyHome() {
             <div className='home' style={{ marginTop: '-60px' }}>
                 <div class="content">
                     <h3 style={{ fontSize: '50px' }}>{settingsData?.title}</h3>
-                    <span style={{ fontSize: '30px' }}>Revolutionize Your Digital Presence with Cutting-edge Tech Solutions</span>
-                    <p style={{ fontSize: '15px' }}>Embark on a journey of innovation with our latest IT products, expertly crafted to redefine and elevate your online experience. Dive into the forefront of technology as we unveil revolutionary solutions tailored to meet the evolving demands of the digital era.</p>
-                    <a href="#" onClick={() => navigate('/home')} style={{ fontSize: '20px' }} class="btns">Shop Now</a>
+                    <span style={{ fontSize: '30px' }}>Empower Your Digital Journey with Innovative Technology</span>
+                    <p style={{ fontSize: '15px' }}>Embark on a path of creativity and progress with our cutting-edge IT solutions. Immerse yourself in the latest technological advancements designed to redefine and enhance your online presence. Join us at the forefront of innovation as we unveil groundbreaking solutions tailored to meet the dynamic demands of the digital era.</p>
+                    <a href="#" onClick={() => navigate('/home')} style={{ fontSize: '20px' }} className="btns">Shop Now</a>
 
                 </div>
             </div>
