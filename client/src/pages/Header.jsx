@@ -60,7 +60,7 @@ function Header() {
     return (
         <div onClick={() => { setIsProfileIcon(false); setIsMyNot(false) }}>
 
-            <nav className="main-header navbar navbar-expand" style={{ marginLeft: '0', background: 'rgb(33, 46, 50)', color: '#FFFFFF' }}>
+            <nav className="main-header navbar navbar-expand headerColor" style={{ marginLeft: '0', color: '#FFFFFF' }}>
                 <ul className="navbar-nav" style={{ display: 'flex', alignItems: 'center' }}>
 
                     <li className="nav-item" style={{ marginTop: '-7px' }}>

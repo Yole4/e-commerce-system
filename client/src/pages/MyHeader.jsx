@@ -42,7 +42,7 @@ function MyHeader() {
 
     return (
         <div>
-            <nav className="main-header navbar navbar-expand" style={{ background: 'rgb(33, 46, 50)', color: '#FFFFFF' }}>
+            <nav className="main-header navbar navbar-expand headerColor" style={{ color: '#FFFFFF' }}>
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                     <li className="nav-item">
