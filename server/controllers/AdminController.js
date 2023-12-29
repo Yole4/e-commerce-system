@@ -20,43 +20,34 @@ const addCategory = async (req, res) => {
     if (!sanitizeUserId || !sanitizeCategoryName) {
         return res.status(401).json({ message: "Invalid Input!" });
     }
-    else {
-        const checkCategory = `SELECT * FROM categories WHERE category_name = ?`;
-        db.query(checkCategory, [sanitizeCategoryName], (error, results) => {
-            if (error) {
-                res.status(401).json({ message: "Server side error!" });
-            } else {
-                if (results.length > 0) {
-                    res.status(401).json({ message: `${sanitizeCategoryName} has already exist!` });
-                } else {
-                    const addCategory = `INSERT INTO categories (category_name) VALUES (?)`;
-                    db.query(addCategory, [sanitizeCategoryName], (error, results) => {
-                        if (error) {
-                            res.status(401).json({ message: "Server side error!" });
-                        } else {
-                            res.status(200).json({ message: `${sanitizeCategoryName} has been successfully added!` });
-                        }
-                    });
-                }
-            }
-        });
-    }
-};
 
-// fetch categories
-const fetchCategory = async (req, res) => {
-    const getCategories = `SELECT * FROM categories WHERE isDelete = ?`;
-    db.query(getCategories, ["not"], (error, results) => {
+    const addCategoryProcedure = 'CALL AddCategory(?, ?, @resultMessage)';
+    
+    db.query(addCategoryProcedure, [sanitizeCategoryName, sanitizeUserId], (error, results) => {
         if (error) {
             res.status(401).json({ message: "Server side error!" });
         } else {
-            if (results.length > 0) {
-                res.status(200).json({ message: results });
-            } else {
-                res.status(401).json({ message: "No Category Found!" });
-            }
+            db.query('SELECT @resultMessage as resultMessage', (error, result) => {
+                if (error) {
+                    res.status(401).json({ message: "Server side error!" });
+                } else {
+                    res.status(200).json({ message: result[0].resultMessage });
+                }
+            });
         }
-    })
+    });
+};
+
+// get category
+const fetchCategory = async (req, res) => {
+    const getCategoryProcedure = 'CALL GetCategory()';
+    db.query(getCategoryProcedure, ["not"], (error, results) => {
+        if (error) {
+            res.status(401).json({message: "Server side error!"});
+        }else{
+            res.status(200).json({message: results[0]});
+        }
+    });
 }
 
 // delete category
@@ -65,22 +56,21 @@ const deleteCategory = async (req, res) => {
 
     if (categoryId && categoryName, userId) {
         // delete category
-        const deleteCategory = `UPDATE categories SET isDelete = ? WHERE id = ?`;
-        db.query(deleteCategory, ["Deleted", categoryId], (error, results) => {
+
+        const deleteCategoryProcedure = 'CALL DeleteCategory(?, ?, ?, @responseMessage)';
+        db.query(deleteCategoryProcedure, [categoryId, categoryName, userId], (error, results) => {
             if (error) {
-                res.status(401).json({ message: "Server side error!" });
-            } else {
-                // insert notification
-                const insertNot = `INSERT INTO notifications (user_id, notification_type, content) VALUES (?, ?, ?)`;
-                db.query(insertNot, [userId, "Category", `You've deleted the ${categoryName} on category list`], (error, results) => {
+                res.status(401).json({message: "Server side error!"});
+            }else{
+                db.query('SELECT @responseMessage as responseMessage', (error, results) => {
                     if (error) {
-                        res.status(401).json({ message: "Server side error!" });
-                    } else {
-                        res.status(200).json({ message: `${categoryName} has been successfully deleted!` });
+                        res.status(401).json({message: "Server side error!"});
+                    }else{
+                        res.status(200).json({message: results[0].responseMessage});
                     }
-                });
+                })
             }
-        });
+        })
     } else {
         res.status(401).json({ message: "Something went wrong!" });
     }
@@ -91,32 +81,19 @@ const editCategory = async (req, res) => {
     const { categoryId, categoryName, userId } = req.body;
 
     if (categoryId && categoryName && userId) {
-        const select = `SELECT * FROM categories WHERE category_name = ? AND id != ? AND isDelete = ?`;
-        db.query(select, [categoryName, categoryId, "not"], (error, results) => {
+        const editCategoryProcedure = 'CALL EditCategory(?,?,?, @responseMessage)';
+
+        db.query(editCategoryProcedure, [categoryId, categoryName, userId], (error, response) => {
             if (error) {
-                res.status(401).json({ message: "Server side error!" });
-            } else {
-                if (results.length > 0) {
-                    res.status(401).json({ message: `${categoryName} already exist!` });
-                } else {
-                    // edit
-                    const editCategory = `UPDATE categories SET category_name = ? WHERE id = ?`;
-                    db.query(editCategory, [categoryName, categoryId], (error, results) => {
-                        if (error) {
-                            res.status(401).json({ message: "Server side error!" });
-                        } else {
-                            // insert notification
-                            const insertNot = `INSERT INTO notifications (user_id, notification_type, content) VALUES (?, ? ,?)`;
-                            db.query(insertNot, [userId, "Category", `You've successfully updated ${categoryName}`], (error, results) => {
-                                if (error) {
-                                    res.status(401).json({ message: "Server side error!" });
-                                } else {
-                                    res.status(200).json({ message: `${categoryName} has been successfully updated!` });
-                                }
-                            });
-                        }
-                    });
-                }
+                res.status(401).json({message: "Server side error!"});
+            }else{
+                db.query('SELECT @responseMessage as responseMessage', (error, results) => {
+                    if (error) {
+                        res.status(401).json({message: "Server side error!"});
+                    }else{
+                        res.status(200).json({message: results[0].responseMessage});
+                    }
+                })
             }
         });
     } else {
@@ -126,12 +103,12 @@ const editCategory = async (req, res) => {
 
 // fetch all users
 const fetchUsers = async (req, res) => {
-    const fetchUser = `SELECT * FROM users WHERE isDelete = ? AND user_type = ?`;
-    db.query(fetchUser, ["not", "Customer"], (error, results) => {
+    const fetchUser = 'CALL FetchUsers()';
+    db.query(fetchUser, (error, results) => {
         if (error) {
             res.status(401).json({ message: "Server side error!" });
         } else {
-            res.status(200).json({ message: results });
+            res.status(200).json({ message: results[0] });
         }
     });
 }

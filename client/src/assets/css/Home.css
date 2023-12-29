@@ -689,7 +689,7 @@ header .shopping span{
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url('../images/logo.webp') no-repeat;
+    background: url('../images/back.jpg') no-repeat;
     background-size: cover;
     background-position: center;
     padding: 0 5%;
