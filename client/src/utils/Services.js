@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const baseUrl = "https://online-it-products-backend-hjac.onrender.com/api";
-export const backendUrl = "https://online-it-products-backend-hjac.onrender.com";
+export const baseUrl = "https://online-it-products-hacy.onrender.com/api";
+export const backendUrl = "https://online-it-products-hacy.onrender.com";
 
 // export const baseUrl = "http://localhost:3001/api";
 // export const backendUrl = "http://localhost:3001";
