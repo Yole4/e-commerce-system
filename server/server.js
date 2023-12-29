@@ -29,7 +29,7 @@ app.use('/api/public', PublicRoutes);
 app.get('/', (req, res) => {
     res.send("Welcome to e-commerce system backend!");
 });
-
+// testing
 app.listen(port, (req, res) => {
     console.log(`Server running on port ${port}`);
 });
